@@ -1,0 +1,28 @@
+KEYBOARD & MOUSE KEYS NAMES/CODES REFERENCE: Collection of unknown key codes for AHK scripts.
+=============================================
+/*----0.0-USE_IN_SCRIPTS------
+|Catch Key Press:
+|[ (m)(Key)(c)::<Result Action> ] //or loop/if statement on next line
+|{WHERE:(m)=modifier key;(Key)=input key name/code;(c)=condition/state change} 
+|	//modifier not req'd & won't trigger alone, condition not req'd (none=key down, "up"=key up)
+|EX>
+|[ ^J Up:: 
+
+-----END-0.0-----------------*/
+
+MOUSE:
+---------------------------------
+INPUT (Key) NAMES-
+------------------
+LButton - left mouse button 
+RButton - right mouse button
+MButton - middle or wheel mouse button
+
+WheelDown - rotating the mouse wheel down (toward you)
+WheelUp - the opposite of the above
+		>Unneeded - WheelLeft and WheelRight [v1.0.48+] - these two require a mouse with left/right scrolling capability, but they have no effect on operating systems older than Windows Vista.
+(See mouse wheel hotkeys to detect how far the wheel has been turned.)
+
+Supported only in Windows 2000/XP or later:
+XButton1 - Mouse 4 
+XButton2 - Mouse 5
