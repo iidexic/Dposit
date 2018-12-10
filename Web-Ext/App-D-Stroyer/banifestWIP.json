@@ -1,0 +1,25 @@
+//https://stackoverflow.com/questions/11684454/getting-the-source-html-of-the-current-page-from-chrome-extension
+{
+    "name": "Extension",
+    "version": "1.0",
+    "description": "Extension",
+    "browser_action": {
+      "default_icon": "bmarkred.ico",
+      "popup": "Test.html"
+    },
+    "content_scripts": [
+      {
+        "matches": ["http://*/*"],
+        "js": ["content.js"]
+      }
+    ],
+    "background": {
+      "page": "backgroundPage.html"
+    },
+    "permissions": [
+      "cookies",
+      "tabs",
+      "http://*/*", 
+      "https://*/*"
+    ]
+  }
