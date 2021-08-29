@@ -1,0 +1,3 @@
+The intended goal with this whole lot of nothing was to make a script to grab some random VSTi's out of my plugin dir to make a shortlist of a small amount of them that would be used as a starting point for any given musual project.
+
+This obviously never went anywhere and it probably never will.

@@ -1,0 +1,3 @@
+Autohotkey scripts made long long ago - 
+
+Only real script I made was hotkeys for VCV rack use
