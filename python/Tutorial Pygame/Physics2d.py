@@ -36,15 +36,17 @@ WIN = pg.display.set_mode(size) #initializing screen, ie window everything is dr
 ball = pg.transform.scale(pg.image.load(os.path.join('Assets','shittyball.png')), [32,32])
 #===[VELOCITY CALCULATIONS]==============
 def calculateVelocity(gameobj,vel,accel):
-    #Bouncing Script. It's Shit really.
-    #TODO NOW: FIX THIS DUMB THING
+    applygrav = True #eliminates gravity decay 
+
     #We check whether an object is "Out of Bounds", as well as whether its velocity would place it more out of bounds on the axis it's going
     if gameobj.left < 0 and vel[0] < 0 or gameobj.right > width and vel[0] > 0:
         vel[0] = -vel[0]
     if gameobj.top < 0 and vel[1] < 0 or gameobj.bottom > height and vel[1] > 0:
         vel[1] = -vel[1]
+        applygrav = False
     #Gravity Addition:
-    vel[1] += GRAVITY/(FPS)
+    if applygrav:
+        vel[1] += GRAVITY/(FPS)
     """ Right now this dumb setup has the ball falling through the floor
         because gravity keeps pushing it down slightly even when its velocity
         gets to zero. after this it gets pushed down 1x unit (pixel) per frame
