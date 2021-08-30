@@ -22,8 +22,8 @@ pg.display.set_caption("Game that game fart")
 #Loading Images for use in game:
 #Using OS to find path to images. os.path.join(folder,filename) - path.join(path1,path2,path3) etc
 #When looking for path to anything, begins looking from folder being executed from. In this case is Pyle, and not the tutorial pygame folder directly
-PLAYERSHIP_IMAGE = pg.image.load(os.path.join('Tutorial Pygame','Assets','ship_0000.png'))
-ENEMYSHIP1_IMAGE = pg.image.load(os.path.join('Tutorial Pygame','Assets','ship_0005.png'))
+PLAYERSHIP_IMAGE = pg.image.load(os.path.join('Assets','ship_0000.png'))
+ENEMYSHIP1_IMAGE = pg.image.load(os.path.join('Assets','ship_0005.png'))
 
 SHIPWIDTH, SHIPHEIGHT = 50,50
 #Resizing: pg.transform.scale
