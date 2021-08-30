@@ -1,51 +1,60 @@
 import sys, os, pygame as pg
-import numpy
+#import numpy
 """
 TODO:[NEXT STEPS]
+    ********IMPLEMENT ACTUAL EXIT FUNCTIONALITY JUST IN CASE
+    * MOVE TO VECTOR2 also just actually learn pygame instead of sloughing through it
+    * Figure out how Pygame Layering works (Is it just order of )
     * Implementation of Collisions
     * Implementation of Friction/Air Drag
     * Implementation of Angular Velocity
     [LATER]
-    * Figure out how to make actual physics independent of screen size/FPS (should not be that hard if I'm not an idiot)
+    * Figure out how to make actual physics independent of screen size/FPS
     * Get a good color system going
-    
+    * Learn how to use pg.display.update to selectively update using method of blitting created in the cleanloop
     
 """
 pg.init()
 #Check the original at: https://www.pygame.org/docs/tut/PygameIntro.html
 
-#Added clock to keep framerate in check. This is also basically the game's internal clock
+##Added clock to keep framerate in check. This is also basically the game's internal clock
 clock = pg.time.Clock() 
 FPS = 120
-size = width, height = 640, 480 #Size of screen, also used for spatial calculations
+size = width, height = 640, 480 #Size of screen
 speed = [0, 0] #Initialized ball velocity in [x,y] (I think)
 
 #TODO IN FUTURE: MAKE A BETTER SETUP TO HANDLE COLORS
 
 black = 0, 0, 0 #Color black
 white = 255,255,255 #Color white
-GRAVITY = 400 #Set grav for physics calculations
-WIN = pg.display.set_mode(size) #initializing screen, ie window everything is drawn to
+GRAVITY = 120 #Set grav for physics calculations
+WIN = pg.display.set_mode(size) #initializing screen, ie window everything is drawn to\
 
-# random initializations. I don't like this and it's bad (also didn't work anyway so it's gone)
+#Toggle for debug display
+
+
 ball = pg.transform.scale(pg.image.load(os.path.join('Assets','shittyball.png')), [32,32])
 #===[VELOCITY CALCULATIONS]==============
-def calculateVelocity(object,vel,accel):
+def calculateVelocity(gameobj,vel,accel):
     #Bouncing Script. It's Shit really.
     #TODO NOW: FIX THIS DUMB THING
-    #ISSUE: The velocity can be high enough (with gravity) that the object is 
-    #         past 0 on 2 consecutve frames.This just fucks up this whole idea. 
-    if object.left < 0 and vel[0] < 0 or object.right > width and vel[0] > 0:
+    #We check whether an object is "Out of Bounds", as well as whether its velocity would place it more out of bounds on the axis it's going
+    if gameobj.left < 0 and vel[0] < 0 or gameobj.right > width and vel[0] > 0:
         vel[0] = -vel[0]
-    if object.top < 0 and vel[1] < 0 or object.bottom > height and vel[1] > 0:
+    if gameobj.top < 0 and vel[1] < 0 or gameobj.bottom > height and vel[1] > 0:
         vel[1] = -vel[1]
-
-
-
-    
-
     #Gravity Addition:
     vel[1] += GRAVITY/(FPS)
+    """ Right now this dumb setup has the ball falling through the floor
+        because gravity keeps pushing it down slightly even when its velocity
+        gets to zero. after this it gets pushed down 1x unit (pixel) per frame
+        because the gravity velocity is added after the whole setup to prevent that."""
+#Collisions: Only way I can think of right now is to loop through everything and make sure they aren't hitting each other. Better way?
+#if want to define my own objects I will have to make lists that contain both the pygame rect and whatever transformations I will use to calculate the 
+#def debugDisplay()
+
+#LEARNING TEXT:
+
 
 def main(): #clock, width, height, speed, black, WIN, ball
     ballrect = ball.get_rect()
@@ -62,7 +71,7 @@ def main(): #clock, width, height, speed, black, WIN, ball
 
         WIN.fill(black)
         WIN.blit(ball, ballrect)
-        pg.display.flip()
+        pg.display.update()
 
 if __name__ == "__main__":
     main()
