@@ -6,14 +6,14 @@ import numpy
 
 RW, RH = 400,400
 W, H = 100,100
-FPS = 60
-
+FPS = 120
+LOOP = 1200
 FLAGS = 0 #  | pygame.SCALED
 SHIFTS = [(0, 1), (-1, 0), (1, 0), (0, -1),(0,0)]
 
 class State:
     def __init__(self):
-        self.grid = numpy.random.randint(0, 0xFFFFFF + 1, (W, H), numpy.int32)
+        self.reset()
 
     def step(self):
         shifted = []
@@ -32,13 +32,21 @@ class State:
 
     def draw(self, screen):
         pygame.surfarray.blit_array(screen, numpy.repeat(numpy.repeat(self.grid,4,axis=1),4,axis=0))
-
+    
+    def reset(self):
+        self.grid = numpy.random.randint(0, 0xFFFFFF + 1, (W, H), numpy.int32)
+    
+    def savecolor(self):
+        selection = numpy.argmax(numpy.bincount(self.grid))
+        savemask = self.grid == selection
 
 if __name__ == "__main__":
     pygame.init()
     screen = pygame.display.set_mode((RW, RH), flags=FLAGS)
     state = State()
     clock = pygame.time.Clock()
+
+    resetcounter = 0
 
     running = True
     last_update_time = pygame.time.get_ticks()
@@ -59,13 +67,16 @@ if __name__ == "__main__":
                 elif e.key == pygame.K_LEFT:
                     FPS = max(10, FPS - 10)
                     print("Decreased target FPS to: {}".format(FPS))
+                elif e.key == pygame.K_UP:
+                    pass
+   
         state.step()
         state.draw(screen)
 
         pygame.display.flip()
-
-        if current_time // 1000 > last_update_time // 1000:
-            pygame.display.set_caption("Color Swirl (FPS={:.1f}, TARGET_FPS={}, SIZE={})".format(clock.get_fps(), FPS, (W, H)))
-
+        # if current time is at least 1000 larger (like 1 second) than last update
+        if current_time // LOOP > last_update_time // LOOP:
+            # pygame.display.set_caption("Color Swirl (FPS={:.1f}, TARGET_FPS={}, SIZE={})".format(clock.get_fps(), FPS, (W, H)))
+            pygame.display.set_caption('time:{}|FPS:{:.1f}|rcount:{}'.format(current_time,clock.get_fps(),resetcounter))
         last_update_time = current_time
         clock.tick(FPS)
