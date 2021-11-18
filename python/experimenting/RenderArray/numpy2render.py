@@ -1,22 +1,28 @@
-# THIS IS NOT MY CODE I'M JUST TOO LAZY TO FORK OR DL FROM GITHUB CORRECTLY
-# From: https://github.com/davidpendergast/pygame-utils/
-
 import pygame
 import numpy
 import os
+from numpy import average as avg
 
-# so this is a mess
-#RW, RH = 400,400
-#W, H = 200, 200
-#MW, MH = (RW/W, RH/H) # mults for repeat
+from pygame._sdl2.video import Window
+# Grabbing monitor info. TODO: may have to get all screens later if want compatibility with multi-monitor
+from screeninfo import get_monitors
+MONITORS = get_monitors()
+SCREENW = MONITORS[0].width
+SCREENH = MONITORS[0].height
+
+# X and Y velocity for screen
+XV = 0
+YV = 0
 
 # REPLACE WITH:
-W,H = 75,75
-MDISP = 2
-FPS = 60
+W,H = 100,100
+MDISP = 3
+FPS = 120
 
+# Colors
 BLACK = 0x000000
 
+COLOR = {'black':0x000000,'white':0xFFFFFF,'red':0xFF0000,'green':0x00FF00,'blue':0x0000FF,'gray':0x888888}
 FLAGS = 0 #  | pygame.SCALED
 SHIFTS = [(0, 1), (-1, 0), (1, 0), (0, -1),(0,0)]
 
@@ -38,17 +44,43 @@ class State:
     def reset(self):
         self.grid = numpy.full((W,H),BLACK)
 
-def setdisplay():
-    os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (W,H)
+def centerwindow():
+    center = ((SCREENW - (W*MDISP))/2, (SCREENH - (H*MDISP))/2)
+    return center
+
+def movewindow(window,X,Y):
+    x,y = window.position
+    x += X
+    y += Y
+    window.position = (x,y)
+
+def setdisplay(window):
+    # os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (centerwindow())
+    print(window.position)
     return pygame.display.set_mode((W*MDISP,H*MDISP),flags = FLAGS)
-    
-    
+
+def DVDLogo(window):
+    global XV
+    global YV
+    x = -(XV)
+    y = -(YV)
+    wMax = W*MDISP + window.position[0]
+    hMax = H*MDISP + window.position[1]
+    wMin = window.position[0]
+    hMin = window.position[1]
+    if wMax >= (SCREENW-1) or wMin <= 1:
+        XV = x
+    if hMax >= (SCREENH-1) or hMin <= 1:
+        YV = y
+
 if __name__ == "__main__":
     pygame.init()
-    screen = setdisplay()
+    screen = pygame.display.set_mode((W*MDISP,H*MDISP),flags = FLAGS)
+    window = Window.from_display_module()
+    window.position = centerwindow()
+    screen = setdisplay(window)
     state = State()
     clock = pygame.time.Clock()
-    
     running = True
     last_update_time = pygame.time.get_ticks()
 
@@ -58,7 +90,7 @@ if __name__ == "__main__":
         for e in pygame.event.get():
             if e.type == pygame.QUIT or (e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE):
                 running = False
-            elif e.type == pygame.KEYDOWN:
+            elif e.type == pygame.KEYDOWN: 
                 if e.key == pygame.K_r:
                     print("Resetting.")
                     state = State()
@@ -71,11 +103,15 @@ if __name__ == "__main__":
                 elif e.key == pygame.K_UP:
                     MDISP += 1
                     print("MDISP now {}".format(MDISP))
-                    screen = setdisplay()
+                    screen = setdisplay(window)
                 elif e.key == pygame.K_DOWN and MDISP > 2:
                     MDISP -= 1
                     print("MDISP now {}".format(MDISP))
-                    screen = setdisplay()
+                    screen = setdisplay(window)
+                elif e.key == pygame.K_SPACE:
+                    movewindow(window)
+        DVDLogo(window)
+        movewindow(window,XV,YV)
         state.step()
         state.draw(screen)
 
@@ -84,8 +120,8 @@ if __name__ == "__main__":
         if current_time // 1000 > last_update_time // 1000:
             
             #[LINE]
-            pygame.display.set_caption("FPS:{:.1f}|TARGET:{}|RES:{}"
-            .format(clock.get_fps(), FPS, (W * MDISP, H * MDISP)))
+            pygame.display.set_caption("FPS:{:.1f}|TICK:{}|RES:{}"
+            .format(clock.get_fps(), dt, (W * MDISP, H * MDISP)))
             #[ENDL]
 
         last_update_time = current_time
