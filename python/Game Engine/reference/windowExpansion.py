@@ -4,7 +4,6 @@ sys.path.insert(1, os.path.join(os.getcwd(),'Project Files'))
 
 import pygame
 import numpy
-import src.assethandler as gobj
 # TODO: Decide if NOFRAME IS GOING TO STAY OR NOT
 
 from pygame._sdl2.video import Window

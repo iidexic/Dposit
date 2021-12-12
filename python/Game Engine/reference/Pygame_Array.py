@@ -4,7 +4,6 @@ import numpy as np
 
 from pygame.event import get
 from src.game_time import game_time as gt
-from src.assethandler import get_obj
 from src.windowhandler import centerwindow as center # prob don't need for now
 #--------------
 #* code to get screen resolution. Put in own file?

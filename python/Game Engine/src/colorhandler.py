@@ -1,6 +1,7 @@
 from pygame import image
 import os
 
+# Loads creates pygame palette from given palette
 class colorpalette:
     def __init__(self,palettefile):
         self.file = palettefile
@@ -9,5 +10,5 @@ class colorpalette:
 
     #def make_dict(self): # if want to build dictionary of color descriptors. seems pointless tho
     
-test = colorpalette('japanese-woodblock-32x.png')
-print(test.palette)
+#test = colorpalette('japanese-woodblock-32x.png')
+#print(test.palette)

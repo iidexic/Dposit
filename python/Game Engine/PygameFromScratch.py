@@ -1,9 +1,8 @@
 import pygame as pg
 import os
 
-from pygame.event import get
 from src.game_time import game_time as gt
-from src.assethandler import get_obj
+import src.asset_handler as assets
 #--------------
 #* code to get screen resolution. Put in own file?
 from screeninfo import get_monitors
@@ -22,6 +21,8 @@ MDISP = 1
 FPS = 120
 FLAGS = 0
 
+def load_sprites():
+    
 
 def centerwindow():
     center = ((SCREENW - (W*MDISP))/2, (SCREENH - (H*MDISP))/2)
@@ -39,17 +40,18 @@ def main():
     running = True
     redraw = True
     igt = gt(pg.time)
-    test_object = get_obj('ball16')
-    test_rect = test_object.get_rect()
-    x,y = 10,10
-    test_rect = test_rect.move(100,100)
+    #test_object = get_obj('ball16')
+    #test_rect = test_object.get_rect()
+    #x,y = 10,10
+    #test_rect = test_rect.move(100,100)
+    #screen.blit(test_object,test_rect)
     screen.fill((0,0,0))
     blorb = pg.Surface((100,60))
+    blarb = pg.Surface((50,50))
     glarg = pg.draw.line(blorb,0xFFFFFF,(20,20),(40,40),4)
-    glorg = pg.draw.rect()
+    glorg = pg.draw.rect(blorb,0xAA2266,pg.Rect(19,19,23,23),2)
     screen.blit(blorb, glarg)
-    screen.blit(blorb,glorg)
-    screen.blit(test_object,test_rect)
+
     #screen.ref
     #mainloop
     while running:

@@ -1,10 +1,28 @@
 import json
 import os
+
 from pygame import image
 from pygame import Surface
-#MODES: Frame mode = 'frames', Slices mode = 'slices'
+
+
+'''
+import csv
+
+class tilemap:
+    def __init__(self,map_file, sprites_dict ,tile_size  = 16, dir = 'assets'):
+        self.sprites = sprites_dict
+        self.map_file = map_file
+        self.tile_size = tile_size
+        self.dir = dir
+        self.loadmap()
+        
+    def loadmap(self):
+        with open(os.path.join(self.dir,self.map_file)) as data:
+            data = csv.reader(data,delimiter = ',')
+'''
 
 class spritelib:
+    #MODES: Frame mode = 'frames', Slices mode = 'slices'
     def __init__(self, img_file = '',json_file = '', dir = 'assets',mode = 'frames'):
         self.img_file = image.load(os.path.join(dir,img_file))
         self.json_file = json_file
