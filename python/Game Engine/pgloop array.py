@@ -1,3 +1,4 @@
+from numpy.lib import gradient
 import pygame as pg
 import numpy as np
 import os
@@ -58,10 +59,10 @@ def main():
     #---Array Fun-------
     screenarray = np.full((RES),0x666666)
     white_square = np.full((250,250),0xEEEEFF)
-    mystery1 = np.linspace(0x111111, 0xFFFFFF, 10000).reshape(100,100)
-    mystery2 = np.linspace(0x444444, 0xFFFFFF, 10000).reshape(100,100)
-    mystery3 = np.linspace(0x888888, 0xFFFFFF, 10000).reshape(100,100)
-    mystery4 = np.linspace(0xBBBBBB, 0xFFFFFF, 10000).reshape(100,100)
+    mystery1 = np.linspace(0x00FFFF, 0xFFFFFF, 10000).reshape(100,100)
+    mystery2 = np.linspace(0x000000, 0x00FFFF, 10000).reshape(100,100)
+    mystery3 = np.full((100,100),0xAA3388)
+    mystery4 = np.outer(range(0,100),range(375,475))
     
     overwrite(screenarray,mystery1,(100,100))
     overwrite(screenarray,mystery2,(200,100))
