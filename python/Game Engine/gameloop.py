@@ -7,7 +7,10 @@ from src.game_time import game_time
 RES = W,H = 640, 480
 FPS = 30
 
-
+'''
+#* REQUIRED OBJECTS:
+#
+'''
 
 def write_text(igt):
     pg.display.set_caption('FPS:{:.1f}'.format(igt.clock.get_fps()))
