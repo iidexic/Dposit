@@ -1,2 +1,2 @@
 # Dposit
-A small repo of the stuff I'm using to learn (currently python)
+A small repo of side projects / learning projects
